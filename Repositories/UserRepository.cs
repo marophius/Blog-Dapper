@@ -32,7 +32,10 @@ namespace Blog_Dapper.Repositories
                     var usr = users.FirstOrDefault(x => x.Id == user.Id);
                     if(usr == null) {
                         usr = user;
-                        usr.Roles.Add(role);
+                        if(role != null){
+                            usr.Roles.Add(role);
+                        }
+                        
                         users.Add(usr);
                     }else {
                         usr.Roles.Add(role);
