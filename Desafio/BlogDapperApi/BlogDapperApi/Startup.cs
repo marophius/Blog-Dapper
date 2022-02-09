@@ -1,4 +1,7 @@
-﻿namespace BlogDapperApi
+﻿using BlogDapperApi.Interfaces;
+using BlogDapperApi.Repositories;
+
+namespace BlogDapperApi
 {
     public class Startup
     {
@@ -12,6 +15,11 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
