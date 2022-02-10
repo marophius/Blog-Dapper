@@ -5,6 +5,5 @@ namespace BlogDapperApi.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         Task<List<User>> GetUsersWithRoles();
-        User GetUserWithRoles();
     }
 }

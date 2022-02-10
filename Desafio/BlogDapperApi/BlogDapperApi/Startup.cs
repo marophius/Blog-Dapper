@@ -1,5 +1,7 @@
 ﻿using BlogDapperApi.Interfaces;
 using BlogDapperApi.Repositories;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace BlogDapperApi
 {
@@ -15,6 +17,8 @@ namespace BlogDapperApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string dbConnectionString = Configuration.GetConnectionString(@"Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$;TrustServerCertificate=True;");
+            services.AddTransient<IDbConnection>((sp) => new SqlConnection(dbConnectionString));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

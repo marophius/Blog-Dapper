@@ -1,13 +1,14 @@
 ﻿using BlogDapperApi.Interfaces;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace BlogDapperApi.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly SqlConnection _connection;
-        public Repository(SqlConnection connection) => _connection = connection;
+        private readonly IDbConnection _connection;
+        public Repository(IDbConnection connection) => _connection = connection;
 
         #region CRUD
         public Task Add(T entity) => _connection.InsertAsync<T>(entity);

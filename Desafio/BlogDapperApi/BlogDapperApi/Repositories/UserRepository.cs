@@ -2,13 +2,14 @@
 using BlogDapperApi.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace BlogDapperApi.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        private readonly SqlConnection _connection;
-        public UserRepository(SqlConnection connection) : base(connection) => _connection = connection;
+        private readonly IDbConnection _connection;
+        public UserRepository(IDbConnection connection) : base(connection) => _connection = connection;
         public async Task<List<User>> GetUsersWithRoles()
         {
             var query = @"
@@ -45,7 +46,7 @@ namespace BlogDapperApi.Repositories
             return users;
         }
 
-        public User GetUserWithRoles()
+        public User GetUserWithRoles(int id)
         {
             var query = @"SELECT
                             [User].*,

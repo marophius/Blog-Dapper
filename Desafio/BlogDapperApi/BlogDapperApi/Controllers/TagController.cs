@@ -7,5 +7,9 @@ namespace BlogDapperApi.Controllers
     [ApiController]
     public class TagController : ControllerBase
     {
+        public TagController()
+        {
+
+        }
     }
 }
