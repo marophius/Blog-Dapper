@@ -59,7 +59,6 @@ namespace BlogDapperApi.Controllers
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult<User>> Update(
-            int id,
             [FromServices]
             IUserRepository repository,
             [FromBody] User user
@@ -67,13 +66,13 @@ namespace BlogDapperApi.Controllers
         {
             try
             {
-                if(id != user.Id)
+                if(user == null)
                 {
-                    throw new Exception("Identificadores diferentes");
+                    throw new Exception("Objeto inválido");
                 }
 
                 await repository.Update(user);
-                return Ok();
+                return Ok(user);
             }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -103,17 +102,6 @@ namespace BlogDapperApi.Controllers
         {
             return await repository.GetUsersWithRoles();
             
-        }
-
-        [HttpGet("UserWithRoles/{id:int}")]
-        public async Task<User> GetUserWithRoles(
-            int id,
-            [FromServices]
-            IUserRepository repository
-            )
-        {
-            var user = repository.GetUserWithRoles();
-            return user;
         }
     }
 }

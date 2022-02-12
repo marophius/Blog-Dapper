@@ -78,7 +78,7 @@ namespace BlogDapperApi.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut]
         public async Task<ActionResult<Tag>> UpdateTag(
             Tag tag,
             [FromServices]
