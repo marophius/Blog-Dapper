@@ -15,19 +15,33 @@ namespace BlogDapperApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Tag>> GetAll(
+        public async Task<ActionResult<IEnumerable<Tag>>> GetAll(
             [FromServices]
             ITagRepository repository
             )
         {
-            var tags = await repository.GetAll();
-
-            foreach(var tag in tags)
+            try
             {
-                Console.WriteLine($"{tag.Id} - {tag.Name} ({tag.Slug})");
-            }
+                var tags = await repository.GetAll();
 
-            return tags;
+                if(tags == null)
+                {
+                    throw new Exception("nenhuma tag cadastrada");
+                }else
+                {
+                    foreach (var tag in tags)
+                    {
+                        Console.WriteLine($"{tag.Id} - {tag.Name} ({tag.Slug})");
+                    }
+                }
+
+                return Ok(tags);
+
+            }
+            catch  (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]

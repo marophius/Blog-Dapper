@@ -11,12 +11,25 @@ namespace BlogDapperApi.Controllers
     {
 
         [HttpGet]
-        public async Task<IEnumerable<Role>> GetAll(
+        public async Task<ActionResult<IEnumerable<Role>>> GetAll(
             [FromServices]
             IRoleRepository repository
             )
         {
-            return await repository.GetAll();
+            try
+            {
+                var roles = await repository.GetAll();
+                if(roles == null)
+                {
+                    throw new Exception("Nenhuma role cadastrada");
+                }
+
+                return Ok(roles);
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]

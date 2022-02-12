@@ -14,13 +14,27 @@ namespace BlogDapperApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> Get(
+        public async Task<ActionResult<IEnumerable<User>>> Get(
             [FromServices] 
             IUserRepository repository
             )
         {
-            var users = await repository.GetAll();
-            return users;
+            try
+            {
+                var users = await repository.GetAll();
+                if(users == null)
+                {
+                    throw new Exception("Nenhum usuário cadastrado");
+                }
+
+                return Ok(users);
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpGet("{id:int}")]
