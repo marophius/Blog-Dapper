@@ -68,6 +68,41 @@ namespace BlogDapperApi.Controllers
             }
         }
 
+        [HttpGet("tagsWithPosts")]
+        public ActionResult<Tag> GetTagsWithPosts(
+            [FromServices]
+            ITagRepository repository
+            )
+        {
+            try
+            {
+                
+                var tags = repository.TagsWithPosts();
+
+                if(tags == null)
+                {
+                    throw new Exception("Nenhuma tag cadastrada");
+                }
+
+                foreach(var tag in tags)
+                {
+                    int count = 0;
+                    foreach (var post in tag.Posts)
+                    {
+                        count++;
+                    }
+
+                    Console.WriteLine($"{tag.Name} tem {count} posts");
+                }
+
+                return Ok(tags);
+
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<Tag>> AddTag(
             [FromBody]

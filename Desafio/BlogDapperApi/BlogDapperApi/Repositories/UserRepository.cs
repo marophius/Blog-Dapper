@@ -45,32 +45,5 @@ namespace BlogDapperApi.Repositories
                 );
             return users;
         }
-
-        public User GetUserWithRoles(int id)
-        {
-            var query = @"SELECT
-                            [User].*,
-                            [Role].*
-                           FROM
-                            [User],
-                            [Role],
-                            [UserRole]
-                            WHERE [UserRole].[UserId] = [User].[Id] AND [Role].[Id] = [UserRole].[RoleId]";
-
-            var user = new User();
-            var items = _connection.Query<User, Role, User>(query
-                , (usr, role) =>
-                {
-                    if(usr!= null)
-                    {
-                        user = usr;
-
-                        user.Roles.Add(role);
-                    }
-                    return user;
-                }, splitOn: "Id");
-
-            return user;
-        }
     }
 }

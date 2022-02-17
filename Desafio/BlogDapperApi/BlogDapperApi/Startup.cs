@@ -17,7 +17,7 @@ namespace BlogDapperApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string dbConnectionString = Configuration.GetConnectionString(@"Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$;TrustServerCertificate=True;");
+            string dbConnectionString = Configuration.GetConnectionString("BlogDatabase");
             services.AddScoped<IDbConnection>((sp) => new SqlConnection(dbConnectionString));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPostRepository, PostRepository>();

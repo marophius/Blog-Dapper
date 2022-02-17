@@ -4,6 +4,8 @@ namespace BlogDapperApi.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        List<Category> CategoryWithPosts();
+        List<Category> CategoriesWithPosts();
+
+        Category CategoryWithPosts(int id);
     }
 }

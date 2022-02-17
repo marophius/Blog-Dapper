@@ -9,5 +9,7 @@ namespace BlogDapperApi.Repositories
     {
         private readonly IDbConnection _connection;
         public PostRepository(IDbConnection connection) : base(connection) => _connection = connection;
+
+        
     }
 }

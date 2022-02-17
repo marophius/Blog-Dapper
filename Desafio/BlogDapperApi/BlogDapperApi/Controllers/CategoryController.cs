@@ -116,5 +116,29 @@ namespace BlogDapperApi.Controllers
 
             repository.Delete(id);
         }
+
+        [HttpGet("categoryWithPost/{id:int}")]
+        public ActionResult<Category> CategoryWithPosts(
+            int id,
+            [FromServices]
+            ICategoryRepository repository
+            )
+        {
+            try
+            {
+                if(id == 0)
+                {
+                    throw new Exception("Identificador inválido");
+                }
+
+                var category = repository.CategoryWithPosts(id);
+
+                return Ok(category);
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
